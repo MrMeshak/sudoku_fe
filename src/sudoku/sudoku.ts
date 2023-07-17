@@ -1,14 +1,18 @@
 import { count } from 'console';
 import next from 'next/types';
 
-export function hasMultipleSolution(board: number[]) {
-  const solutionCount = 0;
-  const startIndex = board.indexOf(0);
-  if (startIndex === -1) {
+export function hasUniqueSolution(board: number[]) {
+  if (!isValidBoard(board)) {
     return false;
   }
 
-  return hasMultipleSolutionFill([...board], startIndex, solutionCount);
+  const solutionCount = 0;
+  const startIndex = board.indexOf(0);
+  if (startIndex === -1) {
+    return true;
+  }
+
+  return !hasMultipleSolutionFill([...board], startIndex, solutionCount);
 }
 
 export function hasMultipleSolutionFill(board: number[], i: number, solutionCount: number) {
@@ -57,13 +61,6 @@ export function solveBoardFill(board: number[], i: number): number[] | false {
       if (nextIndex === -1) {
         return board;
       }
-      /*if (nextIndex === -1) {
-        solutions.push([...board]);
-        if (solutions.length >= maxSolutions) {
-          return solutions;
-        }
-      }
-      */
 
       if (solveBoardFill(board, nextIndex)) {
         return board;
@@ -74,7 +71,30 @@ export function solveBoardFill(board: number[], i: number): number[] | false {
   return false;
 }
 
-export function validBoard(board: number[]) {}
+export function isValidBoard(board: number[]) {
+  if (board.length != 81) {
+    return false;
+  }
+
+  for (let i = 0; i < 81; i++) {
+    if (board[i] === 0) {
+      continue;
+    }
+
+    if (board[i] < 1 || board[i] > 9) {
+      return false;
+    }
+
+    let num = board[i];
+    board[i] = 0;
+    if (!safeToPlace(board, num, i)) {
+      return false;
+    }
+    board[i] = num;
+  }
+
+  return true;
+}
 
 export function generateBoard() {
   const board = Array(81).fill(0);
