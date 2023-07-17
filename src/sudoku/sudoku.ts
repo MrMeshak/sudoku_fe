@@ -1,4 +1,80 @@
-export function solveBoard(board: number[], i: number) {}
+import { count } from 'console';
+import next from 'next/types';
+
+export function hasMultipleSolution(board: number[]) {
+  const solutionCount = 0;
+  const startIndex = board.indexOf(0);
+  if (startIndex === -1) {
+    return false;
+  }
+
+  return hasMultipleSolutionFill([...board], startIndex, solutionCount);
+}
+
+export function hasMultipleSolutionFill(board: number[], i: number, solutionCount: number) {
+  const numArray = shuffle([1, 2, 3, 4, 5, 6, 7, 8, 9]);
+
+  for (let j = 0; j < numArray.length; j++) {
+    if (safeToPlace(board, numArray[j], i)) {
+      board[i] = numArray[j];
+
+      let nextIndex = board.indexOf(0, i);
+      if (nextIndex === -1) {
+        solutionCount++;
+        if (solutionCount >= 2) {
+          return true;
+        }
+        board[i] = 0;
+        continue;
+      }
+
+      if (hasMultipleSolutionFill(board, nextIndex, solutionCount)) {
+        return true;
+      }
+
+      board[i] = 0;
+    }
+  }
+  return false;
+}
+
+export function solveBoard(board: number[]): number[] | false {
+  const startIndex = board.indexOf(0);
+  if (startIndex === -1) {
+    return board;
+  }
+  return solveBoardFill(board, startIndex);
+}
+
+export function solveBoardFill(board: number[], i: number): number[] | false {
+  const numArray = shuffle([1, 2, 3, 4, 5, 6, 7, 8, 9]);
+
+  for (let j = 0; j < numArray.length; j++) {
+    if (safeToPlace(board, numArray[j], i)) {
+      board[i] = numArray[j];
+
+      const nextIndex = board.indexOf(0, i);
+      if (nextIndex === -1) {
+        return board;
+      }
+      /*if (nextIndex === -1) {
+        solutions.push([...board]);
+        if (solutions.length >= maxSolutions) {
+          return solutions;
+        }
+      }
+      */
+
+      if (solveBoardFill(board, nextIndex)) {
+        return board;
+      }
+      board[i] = 0;
+    }
+  }
+  return false;
+}
+
+export function validBoard(board: number[]) {}
 
 export function generateBoard() {
   const board = Array(81).fill(0);
@@ -57,8 +133,6 @@ export function boxSafe(board: number[], num: number, i: number) {
   const boxStartRow = Math.floor(Math.floor(i / 9) / 3) * 3;
   const boxStartCol = Math.floor((i % 9) / 3) * 3;
   const boxStartIndex = boxStartRow * 9 + boxStartCol;
-
-  console.log(boxStartIndex);
 
   for (let j = 0; j < 3; j++) {
     for (let k = 0; k < 3; k++) {
