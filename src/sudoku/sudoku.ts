@@ -1,5 +1,56 @@
-import { count } from 'console';
-import next from 'next/types';
+export interface IGenerateSudokuResult {
+  __typename: 'GenerateSudokuResult';
+  message: string;
+  board: number[];
+  solution: number[];
+}
+
+export function generateSudoku(difficulty: number): IGenerateSudokuResult {
+  let numOfHoles = 0;
+  switch (difficulty) {
+    case 1:
+      numOfHoles = getRandomInt(28, 31);
+      break;
+    case 2:
+      numOfHoles = getRandomInt(31, 44);
+      break;
+    case 3:
+      numOfHoles = getRandomInt(45, 49);
+      break;
+    case 4:
+      numOfHoles = getRandomInt(49, 52);
+      break;
+    case 5:
+      numOfHoles = getRandomInt(53, 58);
+      break;
+  }
+
+  const solution = generateFilledBoard();
+  const board = pokeHoles([...solution], numOfHoles);
+  return {
+    __typename: 'GenerateSudokuResult',
+    message: 'Sudoku board successfully generated',
+    board: board,
+    solution: solution
+  };
+}
+
+export function pokeHoles(board: number[], numOfHoles: number) {
+  const holeIndexes = shuffle(Array.from(Array(81).keys()));
+  console.log('numHoles:', numOfHoles);
+  console.log(holeIndexes);
+  let holeCount = numOfHoles;
+  for (let j = 0; j < holeCount && j < 81; j++) {
+    const num = board[holeIndexes[j]];
+    board[holeIndexes[j]] = 0;
+    if (!hasUniqueSolution(board)) {
+      board[holeIndexes[j]] = num;
+      holeCount++;
+    }
+  }
+
+  return board;
+}
 
 export function hasUniqueSolution(board: number[]) {
   if (!isValidBoard(board)) {
@@ -39,6 +90,9 @@ export function hasMultipleSolutionFill(board: number[], i: number, solutionCoun
 }
 
 export function solveBoard(board: number[]): number[] | false {
+  if (!isValidBoard(board)) {
+    return false;
+  }
   const startIndex = board.indexOf(0);
   if (startIndex === -1) {
     return board;
@@ -92,9 +146,13 @@ export function isValidBoard(board: number[]) {
   return true;
 }
 
-export function generateBoard() {
-  const board = Array(81).fill(0);
-  return generateBoardFill(board, 0);
+export function generateFilledBoard() {
+  const blankBoard = Array(81).fill(0);
+  const board = generateBoardFill(blankBoard, 0);
+  if (!board) {
+    throw Error('Filled sudoku board could not be generated');
+  }
+  return board;
 }
 
 function generateBoardFill(board: number[], i: number): number[] | false {
@@ -110,7 +168,6 @@ function generateBoardFill(board: number[], i: number): number[] | false {
       if (generateBoardFill(board, i + 1)) {
         return board;
       }
-      console.log(board);
       board[i] = 0; //return to 0 on backtrack
     }
   }
