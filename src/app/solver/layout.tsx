@@ -1,6 +1,6 @@
 import NavBar from '@/components/utils/navigation/navBar';
 
-export default function PlayerPageLayout({ children }: { children: React.ReactNode }) {
+export default function SolverPageLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <NavBar />
