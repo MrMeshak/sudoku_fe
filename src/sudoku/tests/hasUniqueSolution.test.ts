@@ -1,5 +1,5 @@
 import { escape } from 'querystring';
-import { hasUniqueSolution } from '../sudoku';
+import { hasUniqueSolution } from '../hasUniqueSolution';
 
 describe('sudoku - hasUniqueSolution', () => {
   describe('when given a sudoku board with no solution', () => {

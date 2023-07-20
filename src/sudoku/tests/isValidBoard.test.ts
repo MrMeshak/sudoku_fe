@@ -1,4 +1,4 @@
-import { isValidBoard } from '../sudoku';
+import { isValidBoard } from '../sudokuHelper';
 
 describe('sudoku - isValidBoard', () => {
   describe('when given an invalid sudoku board - invalid length', () => {

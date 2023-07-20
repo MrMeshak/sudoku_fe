@@ -1,12 +1,17 @@
-import { generateSudoku, hasUniqueSolution } from '../sudoku';
+import { generateFilledBoard } from '../generateFilledBoard';
+import { hasUniqueSolution } from '../hasUniqueSolution';
+import { generateSudoku } from '../generateSudoku';
 
 describe('sudoku - generateSudoku', () => {
   describe('when given a difficulty level', () => {
     it('should return GenratedSudokuSuccess ', () => {
       const generateSudokuResult = generateSudoku(3);
-      const result = hasUniqueSolution(generateSudokuResult.board);
-      const expected = true;
-      expect(result).toBe(expected);
+
+      expect(generateSudokuResult.__typename).toBe('GenerateSudokuSuccess');
+      if (generateSudokuResult.__typename === 'GenerateSudokuSuccess') {
+        const hasUniqueSolutionResult = hasUniqueSolution(generateSudokuResult.board);
+        expect(hasUniqueSolutionResult).toBe(true);
+      }
     });
   });
 });
