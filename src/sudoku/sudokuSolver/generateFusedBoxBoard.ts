@@ -1,4 +1,5 @@
-interface ISolver_Cell {
+export interface ISolver_Cell {
+  index: number;
   value: string;
   type: 'puzzle' | 'solution' | 'empty';
 }
@@ -11,16 +12,19 @@ export function generateFusedBoard(
   for (let i = 0; i < 81; i++) {
     if (puzzleBoard[i] !== 0) {
       fusedBoard.push({
+        index: i,
         value: puzzleBoard[i].toString(),
         type: 'puzzle',
       });
     } else if (solutionBoard[i] !== 0) {
       fusedBoard.push({
+        index: i,
         value: solutionBoard[i].toString(),
         type: 'solution',
       });
     } else {
       fusedBoard.push({
+        index: i,
         value: '',
         type: 'empty',
       });
@@ -55,19 +59,4 @@ export function generateFusedBoxBoard(
   );
 
   return fusedBoxBoard;
-}
-
-export function stringBoardToBoard(stringBoard: string): number[] {
-  const board: number[] = new Array(81).fill(0);
-  const charArray = stringBoard.split('');
-
-  for (let i = 0; i < charArray.length && i < board.length; i++) {
-    if (charArray[i] === '.') {
-      board[i] = 0;
-    } else if (charArray[i].match(/[1-9]/)) {
-      board[i] = Number(charArray[i]);
-    }
-  }
-
-  return board;
 }

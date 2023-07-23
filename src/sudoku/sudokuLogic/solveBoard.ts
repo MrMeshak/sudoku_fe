@@ -16,14 +16,17 @@ export interface ISolveBoardSuccess {
   solution: number[];
 }
 
-type SolveBoardResult = ISolveBoardSuccess | ISolveBoardUnsolveable | ISolveBoardError;
+type SolveBoardResult =
+  | ISolveBoardSuccess
+  | ISolveBoardUnsolveable
+  | ISolveBoardError;
 
 export function solveBoard(startBoard: number[]): SolveBoardResult {
   const board = [...startBoard];
   if (!isValidBoard(board)) {
     return {
       __typename: 'SolveBoardError',
-      message: 'Error - Invalid sudoku puzzle'
+      message: 'Error - Invalid sudoku puzzle',
     };
   }
   const startIndex = board.indexOf(0);
@@ -31,7 +34,7 @@ export function solveBoard(startBoard: number[]): SolveBoardResult {
     return {
       __typename: 'SolveBoardSuccess',
       message: 'Success - Sudoku puzzle was already complete',
-      solution: board
+      solution: board,
     };
   }
 
@@ -39,14 +42,14 @@ export function solveBoard(startBoard: number[]): SolveBoardResult {
   if (!solution) {
     return {
       __typename: 'SolveBoardUnsolveable',
-      message: 'Unsolvable - Sudoku puzzle unsolvable'
+      message: 'Unsolvable - Sudoku puzzle unsolvable',
     };
   }
 
   return {
     __typename: 'SolveBoardSuccess',
     message: 'Success - Sudoku puzzle solved',
-    solution: solution
+    solution: solution,
   };
 }
 
