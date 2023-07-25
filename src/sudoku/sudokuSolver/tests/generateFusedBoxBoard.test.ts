@@ -1,8 +1,8 @@
-import { generateFusedBoxBoard } from '../generateFusedBoxBoard';
+import { generateFusedBoxBoardCells } from '../generateBoxBoardCells';
 
 describe('sudokuSolver - generateFusedBoxBoard', () => {
   describe('when given a puzzleBoard and solutionBoard', () => {
-    it('should return a fused boxBoard containing fusing the puzzleBoard and solutionBoard', () => {
+    it('should return a fused boxBoard of cell objects containing fusing the puzzleBoard and solutionBoard', () => {
       //prettier-ignore
       const puzzleBoard = [
         5,3,0,0,7,0,0,0,0,
@@ -29,27 +29,24 @@ describe('sudokuSolver - generateFusedBoxBoard', () => {
         3,4,5,2,8,6,1,7,9,
       ];
 
-      const generateFusedBoxBoardResult = generateFusedBoxBoard(
+      const generateFusedBoxBoardCellsResult = generateFusedBoxBoardCells(
         puzzleBoard,
         solutionBoard,
       );
 
-      //prettier-ignore
-      const expected = [
-        
-      ];
-
-      expect(generateFusedBoxBoardResult[0][0]).toEqual({
+      expect(generateFusedBoxBoardCellsResult[0][0]).toEqual({
         index: 0,
         value: '5',
         type: 'puzzle',
       });
-      expect(generateFusedBoxBoardResult[0][2]).toEqual({
+
+      expect(generateFusedBoxBoardCellsResult[0][2]).toEqual({
         index: 2,
         value: '4',
         type: 'solution',
       });
-      expect(generateFusedBoxBoardResult[8][8]).toEqual({
+
+      expect(generateFusedBoxBoardCellsResult[8][8]).toEqual({
         index: 80,
         value: '9',
         type: 'puzzle',
