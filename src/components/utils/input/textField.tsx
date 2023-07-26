@@ -1,5 +1,6 @@
 import { InputHTMLAttributes, ReactElement } from 'react';
 import { FieldError } from './fieldError';
+import { read } from 'fs';
 
 export interface ITextFieldProps {
   onChange: InputHTMLAttributes<HTMLInputElement>['onChange'];
@@ -11,6 +12,7 @@ export interface ITextFieldProps {
   errorMessage?: string;
   touched?: boolean;
   maxLength?: number;
+  readonly?: boolean;
 }
 
 export function TextField(props: ITextFieldProps) {
@@ -23,6 +25,7 @@ export function TextField(props: ITextFieldProps) {
     errorMessage,
     touched,
     maxLength,
+    readonly,
   } = props;
 
   return (
@@ -30,12 +33,15 @@ export function TextField(props: ITextFieldProps) {
       <input
         onChange={props.onChange}
         onBlur={props.onBlur}
-        className="bg-greyScale-50 text-greyScale-900 placeholder-greyScale-500 focus:ring-dark3 w-full rounded-xl border border-slate-300 py-2 pl-4 pr-4 font-light focus:outline-none focus:ring-2"
+        className={`bg-greyScale-50 text-greyScale-900 placeholder-greyScale-500 focus:ring-dark3 w-full rounded-xl border border-slate-300 py-2 pl-4 pr-4 font-light focus:outline-none ${
+          readonly && 'text-slate-400 focus:ring-2'
+        }`}
         id={props.id}
         name={props.name}
         type="text"
         placeholder={props.placeholder}
         maxLength={maxLength}
+        readOnly={readonly}
       />
       {touched && errorMessage ? (
         <FieldError message={props.errorMessage} />

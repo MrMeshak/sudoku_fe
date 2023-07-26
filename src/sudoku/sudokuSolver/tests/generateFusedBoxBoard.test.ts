@@ -1,4 +1,4 @@
-import { generateFusedBoxBoardCells } from '../generateBoxBoardCells';
+import { generateFusedBoxBoardCells } from '../generateFusedBoxBoardCells';
 
 describe('sudokuSolver - generateFusedBoxBoard', () => {
   describe('when given a puzzleBoard and solutionBoard', () => {
