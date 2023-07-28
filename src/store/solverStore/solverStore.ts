@@ -5,6 +5,7 @@ import {
   solveBoard,
 } from '@/sudoku/sudokuLogic/solveBoard';
 import { isValidBoard } from '@/sudoku/sudokuLogic/sudokuHelper';
+import { generateFusedBoxBoardCells } from '@/sudoku/sudokuSolver/generateFusedBoxBoardCells';
 import { stringBoardToBoard } from '@/sudoku/sudokuSolver/stringBoardToBoard';
 import { create } from 'zustand';
 
@@ -85,11 +86,19 @@ const useSolverStore = create<ISolverState>((set) => ({
   },
 }));
 
+export const useSolverStatus = () => useSolverStore((state) => state.status);
+
+export const useSolverActions = () => useSolverStore((state) => state.actions);
+
 export const useSolverPuzzleBoard = () =>
   useSolverStore((state) => state.puzzleBoard);
 export const useSolverSolutionBoard = () =>
   useSolverStore((state) => state.solutionBoard);
 
-export const useSolverStatus = () => useSolverStore((state) => state.status);
+export const useSolverFusedBoxBoard = () =>
+  useSolverStore((state) => {
+    const puzzleBoard = state.puzzleBoard;
+    const solutionBoard = state.solutionBoard;
 
-export const useSolverActions = () => useSolverStore((state) => state.actions);
+    return generateFusedBoxBoardCells(puzzleBoard, solutionBoard);
+  });
