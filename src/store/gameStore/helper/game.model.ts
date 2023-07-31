@@ -1,35 +1,43 @@
-interface IPlayerMoveError {}
+export interface IBoardHistory {
+  playerBoard: number;
+  hintBoard: number;
+  noteBoard: Set<number>[];
+}
 
-interface IPlayerMoveValid {}
+export interface IBaseCell {
+  index: number;
+  value: string;
+}
 
-type TGameMove = IPlayerMoveValid | IPlayerMoveError;
-
-type TNote =
-  | {
-      __typename: 'TNote';
-      index: number;
-      values: Set<number>;
-    }
-  | undefined;
-
-interface IPlayerCell {
+export interface IPlayerCell extends IBaseCell {
   __typename: 'IPlayerCell';
-  value: number;
 }
 
-interface IPuzzleCell {
+export interface IHintCell extends IBaseCell {
+  __typename: 'IHintCell';
+}
+
+export interface IPuzzleCell extends IBaseCell {
   __typename: 'IPuzzleCell';
-  value: number;
 }
 
-interface ISolutionCell {
+export interface ISolutionCell extends IBaseCell {
   __typename: 'ISolutionCell';
-  value: number;
 }
 
-interface IPlayerErrorCell {
-  __typename: 'IPlayerErrorCell';
-  value: number;
+export interface IEmptyCell extends IBaseCell {
+  __typename: 'IEmptyCell';
 }
 
-type TGameCell = IPlayerCell | IPuzzleCell | ISolutionCell | INoteCell;
+export interface INoteCell {
+  __typename: 'INoteCell';
+  index: number;
+  notes: Set<number>;
+}
+
+export type TGameCell =
+  | IPlayerCell
+  | IHintCell
+  | IPuzzleCell
+  | INoteCell
+  | IEmptyCell;

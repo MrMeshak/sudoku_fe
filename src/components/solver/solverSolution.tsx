@@ -4,7 +4,7 @@ import {
   useSolverSolutionBoard,
   useSolverStatus,
 } from '@/store/solverStore/solverStore';
-import { generateFusedBoxBoardCells } from '@/sudoku/sudokuSolver/generateFusedBoxBoardCells';
+import { generateFusedBoxBoardCells } from '@/store/solverStore/helper/generateFusedBoxBoardCells';
 import SolverBoard from './solverBoard';
 import { AlertError, AlertSuccess } from '../utils/alert/alert';
 export interface ISolverSolutionProps {}

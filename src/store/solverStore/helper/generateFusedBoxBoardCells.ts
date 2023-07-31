@@ -1,4 +1,5 @@
-import { ISolverCell, boardToBoxBoardMapping } from './generateBoxBoardCells';
+import { boardToBoxBoardMapping } from './generateBoxBoardCells';
+import { ISolverCell } from './solver.model';
 
 export function generateFusedBoardCells(
   puzzleBoard: number[],

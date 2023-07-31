@@ -1,4 +1,4 @@
-import { ISolverCell } from '@/sudoku/sudokuSolver/generateBoxBoardCells';
+import { ISolverCell } from '@/store/solverStore/helper/solver.model';
 
 export interface ISolverCellProps {
   cellData: ISolverCell;

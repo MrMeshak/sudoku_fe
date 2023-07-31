@@ -1,12 +1,6 @@
-import {
-  ISolveBoardError,
-  ISolveBoardSuccess,
-  ISolveBoardUnsolveable,
-  solveBoard,
-} from '@/sudoku/sudokuLogic/solveBoard';
-import { isValidBoard } from '@/sudoku/sudokuLogic/sudokuHelper';
-import { generateFusedBoxBoardCells } from '@/sudoku/sudokuSolver/generateFusedBoxBoardCells';
-import { stringBoardToBoard } from '@/sudoku/sudokuSolver/stringBoardToBoard';
+import { solveBoard } from '@/sudoku/sudokuLogic/solveBoard';
+import { generateFusedBoxBoardCells } from '@/store/solverStore/helper/generateFusedBoxBoardCells';
+import { stringBoardToBoard } from '@/store/solverStore/helper/stringBoardToBoard';
 import { create } from 'zustand';
 
 interface ISolverStatus {

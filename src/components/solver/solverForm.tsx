@@ -3,8 +3,8 @@ import { useState } from 'react';
 import { useFormik } from 'formik';
 import { TextField } from '../utils/input/textField';
 import SolverBoard from './solverBoard';
-import { generateBoxBoardCells } from '@/sudoku/sudokuSolver/generateBoxBoardCells';
-import { stringBoardToBoard } from '@/sudoku/sudokuSolver/stringBoardToBoard';
+import { generateBoxBoardCells } from '@/store/solverStore/helper/generateBoxBoardCells';
+import { stringBoardToBoard } from '@/store/solverStore/helper/stringBoardToBoard';
 import {
   useSolverActions,
   useSolverStatus,

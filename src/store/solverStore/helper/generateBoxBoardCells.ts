@@ -1,8 +1,4 @@
-export interface ISolverCell {
-  index: number;
-  value: string;
-  type: 'puzzle' | 'solution' | 'empty';
-}
+import { ISolverCell } from './solver.model';
 
 export const boardToBoxBoardMapping = [
   [0, 1, 2, 9, 10, 11, 18, 19, 20],
