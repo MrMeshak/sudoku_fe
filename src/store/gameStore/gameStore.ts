@@ -9,6 +9,10 @@ interface IGameState {
     message: string;
   };
 
+  settings: {
+    difficulty: number;
+  };
+
   index: number | undefined;
 
   playerBoard: number[];
@@ -21,67 +25,79 @@ interface IGameState {
   history: IBoardHistory[];
 
   actions: {
-    generatePuzzle: (difficulty: number) => void;
-    setPostion: (index: number) => void;
+    generatePuzzle: () => void;
+    setSettings: (settings: IGameState['settings']) => void;
+    setIndex: (index: number) => void;
     makeMove: (value: number) => void;
     makeNote: () => void;
     erase: () => void;
   };
 }
 
-const useGameStore = create<IGameState>((set) => ({
-  status: {
-    status: '',
-    message: '',
-  },
+const useGameStore = create<IGameState>((set, get) => {
+  const generateSudokuResult = generateSudoku(1);
+  let puzzleBoard: number[] = [];
+  let solutionBoard: number[] = [];
 
-  index: undefined,
+  return {
+    status: {
+      status: '',
+      message: '',
+    },
 
-  playerBoard: Array(81).fill(0),
-  puzzleBoard: Array(81).fill(0),
-  hintBoard: Array(81).fill(0),
-  solutionBoard: Array(81).fill(0),
+    settings: {
+      difficulty: 1,
+    },
 
-  notesBoard: Array(81).map(() => new Set<number>()),
-  history: [],
+    index: 2,
 
-  actions: {
-    generatePuzzle: (difficulty: number) => {
-      const generateSudokuResult = generateSudoku(difficulty);
+    playerBoard: Array(81).fill(0),
+    puzzleBoard: Array(81).fill(0),
+    hintBoard: Array(81).fill(0),
+    solutionBoard: Array(81).fill(0),
 
-      if (generateSudokuResult.__typename === 'GenerateSudokuError') {
+    notesBoard: Array(81).map(() => new Set<number>()),
+    history: [],
+
+    actions: {
+      generatePuzzle: () => {
+        const generateSudokuResult = generateSudoku(get().settings.difficulty);
+
+        if (generateSudokuResult.__typename === 'GenerateSudokuError') {
+          set((state) => ({
+            status: { status: 'error', message: generateSudokuResult.message },
+          }));
+          return;
+        }
+
         set((state) => ({
-          status: { status: 'error', message: generateSudokuResult.message },
+          status: { status: 'success', message: generateSudokuResult.message },
+          puzzleBoard: generateSudokuResult.board,
+          solutionBoard: generateSudokuResult.solution,
         }));
         return;
-      }
-
-      set((state) => ({
-        status: { status: 'success', message: generateSudokuResult.message },
-        puzzleBoard: generateSudokuResult.board,
-        solutionBoard: generateSudokuResult.solution,
-      }));
-      return;
+      },
+      setSettings: (settings: IGameState['settings']) => {
+        set((state) => ({ settings: settings }));
+      },
+      setIndex: (index: number) => {
+        set((state) => ({ index: index }));
+      },
+      makeMove: (value: number) => {},
+      makeNote: () => {},
+      erase: () => {},
     },
+  };
+});
 
-    setPostion: (index: number) => {
-      set((state) => ({ index: index }));
-    },
-    makeMove: (value: number) => {},
-    makeNote: () => {},
-    erase: () => {},
-  },
-}));
-
-export const useGameActions = () =>
-  useGameStore((state) => {
-    state.actions;
-  });
+export const useGameActions = () => useGameStore((state) => state.actions);
 
 export const useGameStatus = () =>
   useGameStore((state) => {
     state.status;
   });
+
+export const useGameIndex = () => useGameStore((state) => state.index);
 
 export const useFusedGameBoardBoxCells = () => {
   return useGameStore((state) => {
