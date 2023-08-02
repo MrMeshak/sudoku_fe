@@ -1,11 +1,6 @@
-import {
-  ISolveBoardError,
-  ISolveBoardSuccess,
-  ISolveBoardUnsolveable,
-  solveBoard,
-} from '@/sudoku/sudokuLogic/solveBoard';
-import { isValidBoard } from '@/sudoku/sudokuLogic/sudokuHelper';
-import { stringBoardToBoard } from '@/sudoku/sudokuSolver/stringBoardToBoard';
+import { solveBoard } from '@/sudoku/sudokuLogic/solveBoard';
+import { generateFusedBoxBoardCells } from '@/store/solverStore/helper/generateFusedBoxBoardCells';
+import { stringBoardToBoard } from '@/store/solverStore/helper/stringBoardToBoard';
 import { create } from 'zustand';
 
 interface ISolverStatus {
@@ -85,11 +80,19 @@ const useSolverStore = create<ISolverState>((set) => ({
   },
 }));
 
+export const useSolverStatus = () => useSolverStore((state) => state.status);
+
+export const useSolverActions = () => useSolverStore((state) => state.actions);
+
 export const useSolverPuzzleBoard = () =>
   useSolverStore((state) => state.puzzleBoard);
 export const useSolverSolutionBoard = () =>
   useSolverStore((state) => state.solutionBoard);
 
-export const useSolverStatus = () => useSolverStore((state) => state.status);
+export const useSolverFusedBoxBoard = () =>
+  useSolverStore((state) => {
+    const puzzleBoard = state.puzzleBoard;
+    const solutionBoard = state.solutionBoard;
 
-export const useSolverActions = () => useSolverStore((state) => state.actions);
+    return generateFusedBoxBoardCells(puzzleBoard, solutionBoard);
+  });

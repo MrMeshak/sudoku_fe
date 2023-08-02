@@ -60,12 +60,12 @@ export default function NavBar(props: INavBarProps) {
       </div>
       <ul className="flex list-none rounded-sm p-4 font-semibold">
         <li className="block pr-4">
-          <Link className="underline-offset-2 hover:underline " href="/">
+          <Link className="underline-offset-2 hover:underline " href="/game">
             Player
           </Link>
         </li>
         <li className="block">
-          <Link className="underline-offset-2 hover:underline" href="/">
+          <Link className="underline-offset-2 hover:underline" href="/solver">
             Solver
           </Link>
         </li>

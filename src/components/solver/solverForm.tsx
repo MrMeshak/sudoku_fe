@@ -3,9 +3,12 @@ import { useState } from 'react';
 import { useFormik } from 'formik';
 import { TextField } from '../utils/input/textField';
 import SolverBoard from './solverBoard';
-import { generateBoxBoardCells } from '@/sudoku/sudokuSolver/generateBoxBoardCells';
-import { stringBoardToBoard } from '@/sudoku/sudokuSolver/stringBoardToBoard';
-import { useSolverActions } from '@/store/solverStore/solverStore';
+import { generateBoxBoardCells } from '@/store/solverStore/helper/generateBoxBoardCells';
+import { stringBoardToBoard } from '@/store/solverStore/helper/stringBoardToBoard';
+import {
+  useSolverActions,
+  useSolverStatus,
+} from '@/store/solverStore/solverStore';
 
 interface ISolverFormValues {
   sudokuBoardStr: string;
@@ -17,6 +20,7 @@ export interface ISolverFormProps {}
 
 export default function SolverForm(props: ISolverFormProps) {
   const { solve, reset } = useSolverActions();
+  const status = useSolverStatus;
 
   const [formStatus, setFormStatus] = useState<FormStatus>('input');
 
@@ -50,8 +54,8 @@ export default function SolverForm(props: ISolverFormProps) {
   return (
     <>
       <form onSubmit={formik.handleSubmit} className="m-8">
+        <label htmlFor="sudokuStr">Sudoku Board</label>
         <div className="mb-2">
-          <label htmlFor="sudokuStr">Sudoku Board</label>
           <TextField
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}

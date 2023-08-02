@@ -4,8 +4,9 @@ import {
   useSolverSolutionBoard,
   useSolverStatus,
 } from '@/store/solverStore/solverStore';
-import { generateFusedBoxBoardCells } from '@/sudoku/sudokuSolver/generateFusedBoxBoardCells';
+import { generateFusedBoxBoardCells } from '@/store/solverStore/helper/generateFusedBoxBoardCells';
 import SolverBoard from './solverBoard';
+import { AlertError, AlertSuccess } from '../utils/alert/alert';
 export interface ISolverSolutionProps {}
 
 export default function SolverSolution(props: ISolverSolutionProps) {
@@ -22,6 +23,14 @@ export default function SolverSolution(props: ISolverSolutionProps) {
   return (
     <div className="m-8">
       <SolverBoard boxBoardCells={boxBoardCells} />
+      <div className="mt-4">
+        {status.status === 'success' ? (
+          <AlertSuccess message={status.message} />
+        ) : null}
+        {status.status === 'error' || status.status === 'unsolvable' ? (
+          <AlertError message={status.message} />
+        ) : null}
+      </div>
     </div>
   );
 }
