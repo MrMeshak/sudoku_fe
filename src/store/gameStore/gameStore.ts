@@ -30,15 +30,12 @@ interface IGameState {
     setIndex: (index: number) => void;
     makeMove: (value: number) => void;
     makeNote: () => void;
+    undo: () => void;
     erase: () => void;
   };
 }
 
 const useGameStore = create<IGameState>((set, get) => {
-  const generateSudokuResult = generateSudoku(1);
-  let puzzleBoard: number[] = [];
-  let solutionBoard: number[] = [];
-
   return {
     status: {
       status: '',
@@ -56,7 +53,7 @@ const useGameStore = create<IGameState>((set, get) => {
     hintBoard: Array(81).fill(0),
     solutionBoard: Array(81).fill(0),
 
-    notesBoard: Array(81).map(() => new Set<number>()),
+    notesBoard: generateIntialNotesBoard(),
     history: [],
 
     actions: {
@@ -83,9 +80,64 @@ const useGameStore = create<IGameState>((set, get) => {
       setIndex: (index: number) => {
         set((state) => ({ index: index }));
       },
-      makeMove: (value: number) => {},
+      makeMove: (value: number) => {
+        const index = get().index;
+        if (!index) {
+          return;
+        }
+
+        const updatedHistory: IBoardHistory[] = [...get().history];
+        updatedHistory.push({
+          playerBoard: get().playerBoard,
+          hintBoard: get().hintBoard,
+          noteBoard: get().notesBoard,
+        });
+
+        const updatedPlayerBoard = [...get().playerBoard];
+        updatedPlayerBoard[index] = value;
+
+        set((state) => ({
+          history: updatedHistory,
+          playerBoard: updatedPlayerBoard,
+        }));
+      },
       makeNote: () => {},
-      erase: () => {},
+      undo: () => {
+        const prevState = get().history.pop();
+        if (!prevState) {
+          return;
+        }
+
+        set((state) => ({
+          playerBoard: prevState.playerBoard,
+          hintBoard: prevState.hintBoard,
+          notesBoard: prevState.noteBoard,
+        }));
+      },
+      erase: () => {
+        const index = get().index;
+        if (!index) {
+          return;
+        }
+
+        const updatedHistory = [...get().history];
+        updatedHistory.push({
+          playerBoard: get().playerBoard,
+          hintBoard: get().hintBoard,
+          noteBoard: get().notesBoard,
+        });
+
+        const updateNoteBoard = [...get().notesBoard];
+        updateNoteBoard[index].clear();
+        const updatedPlayerBoard = [...get().playerBoard];
+        updatedPlayerBoard[index] = 0;
+
+        set((state) => ({
+          playerBoard: updatedPlayerBoard,
+          notesBoard: updateNoteBoard,
+          history: updatedHistory,
+        }));
+      },
     },
   };
 });
@@ -110,3 +162,12 @@ export const useFusedGameBoardBoxCells = () => {
     );
   });
 };
+
+export function generateIntialNotesBoard() {
+  const notesBoard = Array(81);
+  for (let i = 0; i < notesBoard.length; i++) {
+    notesBoard[i] = new Set<number>();
+  }
+
+  return notesBoard;
+}

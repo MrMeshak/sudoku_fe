@@ -1,6 +1,6 @@
 export interface IBoardHistory {
-  playerBoard: number;
-  hintBoard: number;
+  playerBoard: number[];
+  hintBoard: number[];
   noteBoard: Set<number>[];
 }
 

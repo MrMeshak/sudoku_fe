@@ -62,10 +62,17 @@ interface IPlayerCellProps {
 }
 
 function PlayerCell({ cellData }: IPlayerCellProps) {
+  const { setIndex } = useGameActions();
   const index = useGameIndex();
+
+  const handleClick = () => {
+    setIndex(cellData.index);
+  };
+
   return (
     <div
-      className={`flex aspect-square w-full items-center justify-center border text-lg font-semibold text-slate-900 ${
+      onClick={handleClick}
+      className={`flex aspect-square w-full items-center justify-center border text-lg font-semibold text-sky-700 ${
         index === cellData.index ? 'bg-slate-100' : 'bg-white'
       }`}
     >

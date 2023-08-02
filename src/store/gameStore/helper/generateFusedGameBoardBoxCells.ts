@@ -53,13 +53,13 @@ export function generateFusedGameBoardCells(
         index: i,
         value: hintBoard[i].toString(),
       });
-    } else if (playerBoard[i] != 0) {
+    } else if (playerBoard[i] !== 0) {
       boardCells.push({
         __typename: 'IPlayerCell',
         index: i,
         value: playerBoard[i].toString(),
       });
-    } else if (noteBoard[i] !== undefined) {
+    } else if (noteBoard[i].size !== 0) {
       boardCells.push({
         __typename: 'INoteCell',
         index: i,

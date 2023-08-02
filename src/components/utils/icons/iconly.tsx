@@ -77,7 +77,7 @@ export const TickIcon = ({
   );
 };
 
-export const ArrowDown = ({
+export const ArrowDownIcon = ({
   className = 'h-6 w-6',
   fill = 'none',
   stroke = 'currentColor',
@@ -110,6 +110,125 @@ export const ArrowDown = ({
           <polyline id="Stroke-1" points="14 0 7 7 0 0"></polyline>
         </g>
       </g>
+    </svg>
+  );
+};
+
+export const EraserIcon = ({
+  className = 'h-6 w-6',
+  fill = 'none',
+  stroke = 'currentColor',
+  strokeWidth = '1.5',
+}: IIconProps) => {
+  return (
+    <svg
+      className={className}
+      width="24px"
+      height="24px"
+      viewBox="0 0 24 24"
+      strokeWidth={strokeWidth}
+      fill={fill}
+      xmlns="http://www.w3.org/2000/svg"
+      color={stroke}
+    >
+      <path
+        d="M21 21H9M15.889 14.89L8.464 7.463M2.893 12.607l9.193-9.193a2 2 0 012.828 0l4.95 4.95a2 2 0 010 2.828l-9.243 9.243a1.929 1.929 0 01-2.728 0l-5-5a2 2 0 010-2.828z"
+        stroke={stroke}
+        strokeWidth={strokeWidth}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      ></path>
+    </svg>
+  );
+};
+
+export const LightBulbIcon = ({
+  className = 'h-6 w-6',
+  fill = 'none',
+  stroke = 'currentColor',
+  strokeWidth = '1.5',
+}: IIconProps) => {
+  return (
+    <svg
+      className={className}
+      width="24px"
+      height="24px"
+      strokeWidth={strokeWidth}
+      viewBox="0 0 24 24"
+      fill={fill}
+      xmlns="http://www.w3.org/2000/svg"
+      color={stroke}
+    >
+      <path
+        d="M9 18h6M10 21h4M9 15c.001-2-.499-2.5-1.5-3.5-1-1-1.476-2.013-1.5-3.5-.047-3.05 2-5 6-5 4.001 0 6.049 1.95 6 5-.023 1.487-.5 2.5-1.5 3.5-.999 1-1.499 1.5-1.5 3.5"
+        stroke={stroke}
+        strokeWidth={strokeWidth}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      ></path>
+    </svg>
+  );
+};
+
+export const UndoIcon = ({
+  className = 'h-6 w-6',
+  fill = 'none',
+  stroke = 'currentColor',
+  strokeWidth = '1.5',
+}: IIconProps) => {
+  return (
+    <svg
+      className={className}
+      width="24px"
+      height="24px"
+      viewBox="0 0 24 24"
+      strokeWidth={strokeWidth}
+      fill={fill}
+      xmlns="http://www.w3.org/2000/svg"
+      color={stroke}
+    >
+      <path
+        d="M4.5 8H15s0 0 0 0 5 0 5 4.706C20 18 15 18 15 18H6.286"
+        stroke={stroke}
+        strokeWidth={strokeWidth}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      ></path>
+      <path
+        d="M7.5 11.5L4 8l3.5-3.5"
+        stroke={stroke}
+        strokeWidth={strokeWidth}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      ></path>
+    </svg>
+  );
+};
+
+export const NoteIcon = ({
+  className = 'h-6 w-6',
+  fill = 'none',
+  stroke = 'currentColor',
+  strokeWidth = '1.5',
+}: IIconProps) => {
+  return (
+    <svg
+      className={className}
+      width="24px"
+      height="24px"
+      strokeWidth={strokeWidth}
+      viewBox="0 0 24 24"
+      fill={fill}
+      xmlns="http://www.w3.org/2000/svg"
+      color={stroke}
+    >
+      <path
+        d="M8 14h8M8 10h2M8 18h4M10 3H6a2 2 0 00-2 2v15a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2h-3.5M10 3V1m0 2v2"
+        stroke={stroke}
+        strokeWidth={strokeWidth}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      ></path>
     </svg>
   );
 };
