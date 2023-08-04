@@ -2,6 +2,8 @@ import { generateSudoku } from '@/sudoku/sudokuLogic/generateSudoku';
 import { create } from 'zustand';
 import { IBoardHistory } from './helper/game.model';
 import { generateFusedGameBoardBoxCells } from './helper/generateFusedGameBoardBoxCells';
+import { generateIntialNotesBoard } from './helper/generateIntialNotesBoard';
+import { findErrorIndexes } from './helper/findErrorIndexes';
 
 interface IGameState {
   status: {
@@ -22,14 +24,16 @@ interface IGameState {
 
   notesBoard: Set<number>[];
 
+  mistakeIndexes: Set<number>;
+  errorIndexes: Set<number>;
+
   history: IBoardHistory[];
 
   actions: {
     generatePuzzle: () => void;
     setSettings: (settings: IGameState['settings']) => void;
     setIndex: (index: number) => void;
-    makeMove: (value: number) => void;
-    makeNote: () => void;
+    makeNote: (value: number) => void;
     undo: () => void;
     erase: () => void;
   };
@@ -54,6 +58,10 @@ const useGameStore = create<IGameState>((set, get) => {
     solutionBoard: Array(81).fill(0),
 
     notesBoard: generateIntialNotesBoard(),
+
+    mistakeIndexes: new Set<number>(),
+    errorIndexes: new Set<number>(),
+
     history: [],
 
     actions: {
@@ -74,13 +82,58 @@ const useGameStore = create<IGameState>((set, get) => {
         }));
         return;
       },
+
       setSettings: (settings: IGameState['settings']) => {
         set((state) => ({ settings: settings }));
       },
+
       setIndex: (index: number) => {
         set((state) => ({ index: index }));
       },
+
       makeMove: (value: number) => {
+        const index = get().index;
+        if (!index) {
+          return;
+        }
+        const {
+          puzzleBoard,
+          playerBoard,
+          hintBoard,
+          notesBoard,
+          solutionBoard,
+          mistakeIndexes,
+        } = get();
+
+        const updatedHistory: IBoardHistory[] = [...get().history];
+        updatedHistory.push({
+          playerBoard: playerBoard,
+          hintBoard: hintBoard,
+          noteBoard: notesBoard,
+        });
+
+        const updatedPlayerBoard = [...playerBoard];
+        updatedPlayerBoard[index] = value;
+
+        if (solutionBoard[index] !== value) {
+          mistakeIndexes.add(index);
+        }
+
+        const updatedErrorIndexes = findErrorIndexes(
+          puzzleBoard,
+          updatedPlayerBoard,
+          hintBoard,
+          mistakeIndexes,
+        );
+
+        set((state) => ({
+          history: updatedHistory,
+          playerBoard: updatedPlayerBoard,
+          errorIndexes: updatedErrorIndexes,
+        }));
+      },
+
+      makeNote: (value: number) => {
         const index = get().index;
         if (!index) {
           return;
@@ -93,15 +146,14 @@ const useGameStore = create<IGameState>((set, get) => {
           noteBoard: get().notesBoard,
         });
 
-        const updatedPlayerBoard = [...get().playerBoard];
-        updatedPlayerBoard[index] = value;
+        const updatedNotesBoard = [...get().notesBoard];
+        updatedNotesBoard[index].add(value);
 
-        set((state) => ({
-          history: updatedHistory,
-          playerBoard: updatedPlayerBoard,
+        set(() => ({
+          notesBoard: updatedNotesBoard,
         }));
       },
-      makeNote: () => {},
+
       undo: () => {
         const prevState = get().history.pop();
         if (!prevState) {
@@ -114,6 +166,7 @@ const useGameStore = create<IGameState>((set, get) => {
           notesBoard: prevState.noteBoard,
         }));
       },
+
       erase: () => {
         const index = get().index;
         if (!index) {
@@ -153,21 +206,14 @@ export const useGameIndex = () => useGameStore((state) => state.index);
 
 export const useFusedGameBoardBoxCells = () => {
   return useGameStore((state) => {
-    const { puzzleBoard, playerBoard, hintBoard, notesBoard } = state;
+    const { puzzleBoard, playerBoard, hintBoard, notesBoard, errorIndexes } =
+      state;
     return generateFusedGameBoardBoxCells(
       puzzleBoard,
       playerBoard,
       hintBoard,
       notesBoard,
+      errorIndexes,
     );
   });
 };
-
-export function generateIntialNotesBoard() {
-  const notesBoard = Array(81);
-  for (let i = 0; i < notesBoard.length; i++) {
-    notesBoard[i] = new Set<number>();
-  }
-
-  return notesBoard;
-}

@@ -11,6 +11,7 @@ export interface IBaseCell {
 
 export interface IPlayerCell extends IBaseCell {
   __typename: 'IPlayerCell';
+  hasError: boolean;
 }
 
 export interface IHintCell extends IBaseCell {

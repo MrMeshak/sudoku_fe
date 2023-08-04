@@ -17,12 +17,14 @@ export function generateFusedGameBoardBoxCells(
   playerBoard: number[],
   hintBoard: number[],
   noteBoard: Set<number>[],
+  errorIndexes: Set<number>,
 ) {
   const boardCells = generateFusedGameBoardCells(
     puzzleBoard,
     playerBoard,
     hintBoard,
     noteBoard,
+    errorIndexes,
   );
 
   const boxBoardCells = boardToBoxBoardMapping.map((boxMapping) => {
@@ -37,6 +39,7 @@ export function generateFusedGameBoardCells(
   playerBoard: number[],
   hintBoard: number[],
   noteBoard: Set<number>[],
+  errorIndexes: Set<number>,
 ) {
   const boardCells: TGameCell[] = [];
 
@@ -58,6 +61,7 @@ export function generateFusedGameBoardCells(
         __typename: 'IPlayerCell',
         index: i,
         value: playerBoard[i].toString(),
+        hasError: errorIndexes.has(i),
       });
     } else if (noteBoard[i].size !== 0) {
       boardCells.push({

@@ -1,4 +1,5 @@
 'use client';
+import { useState } from 'react';
 import {
   EraserIcon,
   LightBulbIcon,
@@ -11,7 +12,28 @@ export interface IGameControllsProps {}
 
 export default function GameControlls(props: IGameControllsProps) {
   const buttonNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-  const { makeMove, undo, erase } = useGameActions();
+  const [controlMode, setControlMode] = useState<'normal' | 'notes'>('normal');
+  const { makeMove, undo, erase, makeNote } = useGameActions();
+
+  const handleNumberButton = (value: number) => {
+    if (controlMode === 'normal') {
+      makeMove(value);
+      return;
+    }
+
+    if (controlMode === 'notes') {
+      makeNote(value);
+      return;
+    }
+  };
+
+  const handleNotesButton = () => {
+    if (controlMode === 'normal') {
+      setControlMode('notes');
+    } else {
+      setControlMode('normal');
+    }
+  };
 
   return (
     <div className="m-8">
@@ -28,7 +50,14 @@ export default function GameControlls(props: IGameControllsProps) {
         >
           <EraserIcon className="h-6 w-6" />
         </button>
-        <button className="flex items-center justify-center rounded-lg border-2 border-slate-200 p-4 text-slate-500 hover:border-slate-300">
+        <button
+          onClick={handleNotesButton}
+          className={`flex items-center justify-center rounded-lg border-2 border-slate-200 p-4 text-slate-500 hover:border-slate-300 ${
+            controlMode === 'notes'
+              ? ' border-slate-500 hover:border-slate-400'
+              : 'border-slate-200'
+          }`}
+        >
           <NoteIcon className="h-6 w-6" />
         </button>
         <button className="flex items-center justify-center rounded-lg border-2 border-slate-200 p-4 text-slate-500 hover:border-slate-300">
@@ -39,7 +68,7 @@ export default function GameControlls(props: IGameControllsProps) {
       <div className="grid grid-cols-9 grid-rows-1 gap-2">
         {buttonNumbers.map((number) => (
           <button
-            onClick={() => makeMove(number)}
+            onClick={() => handleNumberButton(number)}
             key={`game-control-button-${number}`}
             className=" align-self flex aspect-square w-full items-center justify-center rounded  bg-slate-900 text-xl font-semibold text-white transition-all ease-in-out hover:bg-slate-500"
           >
