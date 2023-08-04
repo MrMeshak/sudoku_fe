@@ -69,12 +69,23 @@ function PlayerCell({ cellData }: IPlayerCellProps) {
     setIndex(cellData.index);
   };
 
+  if (cellData.hasError) {
+    return (
+      <div
+        onClick={handleClick}
+        className={`flex aspect-square w-full flex-wrap items-center justify-center border text-lg font-semibold text-rose-700 
+      ${index === cellData.index ? 'bg-rose-200' : 'bg-rose-100'} `}
+      >
+        <p>{cellData.value}</p>
+      </div>
+    );
+  }
+
   return (
     <div
       onClick={handleClick}
-      className={`flex aspect-square w-full items-center justify-center border text-lg font-semibold text-sky-700 ${
-        index === cellData.index ? 'bg-slate-100' : 'bg-white'
-      }`}
+      className={`flex aspect-square w-full flex-wrap items-center justify-center border text-lg font-semibold text-sky-700 
+      ${index === cellData.index ? 'bg-slate-100' : 'bg-white'} `}
     >
       <p>{cellData.value}</p>
     </div>
@@ -87,13 +98,25 @@ interface INoteCellProps {
 
 function NoteCell({ cellData }: INoteCellProps) {
   const index = useGameIndex();
+  const { setIndex } = useGameActions();
+
+  const handleClick = () => {
+    setIndex(cellData.index);
+  };
 
   return (
     <div
-      className={`${index === cellData.index ? 'bg-slate-100' : 'bg-white'}`}
+      onClick={handleClick}
+      className={`flex flex-wrap items-start overflow-hidden border p-0.5 text-center text-xs text-amber-600 ${
+        index === cellData.index ? 'bg-slate-100' : 'bg-white'
+      }`}
     >
       {Array.from(cellData.notes).map((note, index) => {
-        return <p key={`note_${cellData.index}_${index}`}>{note}</p>;
+        return (
+          <p key={`note_${cellData.index}_${index}`} className="pr-[0.1rem]">
+            {note}
+          </p>
+        );
       })}
     </div>
   );
