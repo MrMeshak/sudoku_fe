@@ -103,32 +103,37 @@ const useGameStore = create<IGameState>((set, get) => {
           notesBoard,
           solutionBoard,
           mistakeIndexes,
+          errorIndexes,
         } = get();
 
         const updatedHistory: IBoardHistory[] = [...get().history];
         updatedHistory.push({
           playerBoard: playerBoard,
           hintBoard: hintBoard,
-          noteBoard: notesBoard,
+          notesBoard: notesBoard,
+          errorIndexes: errorIndexes,
+          mistakeIndexes: mistakeIndexes,
         });
 
         const updatedPlayerBoard = [...playerBoard];
         updatedPlayerBoard[index] = value;
 
+        const updatedMistakeIndexes = new Set(mistakeIndexes);
         if (solutionBoard[index] !== value) {
-          mistakeIndexes.add(index);
+          updatedMistakeIndexes.add(index);
         }
 
         const updatedErrorIndexes = findErrorIndexes(
           puzzleBoard,
           updatedPlayerBoard,
           hintBoard,
-          mistakeIndexes,
+          updatedMistakeIndexes,
         );
 
         set((state) => ({
           history: updatedHistory,
           playerBoard: updatedPlayerBoard,
+          mistakeIndexes: updatedMistakeIndexes,
           errorIndexes: updatedErrorIndexes,
         }));
       },
@@ -139,11 +144,21 @@ const useGameStore = create<IGameState>((set, get) => {
           return;
         }
 
+        const {
+          playerBoard,
+          hintBoard,
+          notesBoard,
+          mistakeIndexes,
+          errorIndexes,
+        } = get();
+
         const updatedHistory: IBoardHistory[] = [...get().history];
         updatedHistory.push({
-          playerBoard: get().playerBoard,
-          hintBoard: get().hintBoard,
-          noteBoard: get().notesBoard,
+          playerBoard: playerBoard,
+          hintBoard: hintBoard,
+          notesBoard: notesBoard,
+          mistakeIndexes: mistakeIndexes,
+          errorIndexes: errorIndexes,
         });
 
         const updatedNotesBoard = [...get().notesBoard];
@@ -163,7 +178,9 @@ const useGameStore = create<IGameState>((set, get) => {
         set((state) => ({
           playerBoard: prevState.playerBoard,
           hintBoard: prevState.hintBoard,
-          notesBoard: prevState.noteBoard,
+          notesBoard: prevState.notesBoard,
+          mistakeIndexes: prevState.mistakeIndexes,
+          errorIndexes: prevState.errorIndexes,
         }));
       },
 
@@ -173,22 +190,44 @@ const useGameStore = create<IGameState>((set, get) => {
           return;
         }
 
+        const {
+          puzzleBoard,
+          playerBoard,
+          hintBoard,
+          notesBoard,
+          mistakeIndexes,
+          errorIndexes,
+        } = get();
+
         const updatedHistory = [...get().history];
         updatedHistory.push({
-          playerBoard: get().playerBoard,
-          hintBoard: get().hintBoard,
-          noteBoard: get().notesBoard,
+          playerBoard: playerBoard,
+          hintBoard: hintBoard,
+          notesBoard: notesBoard,
+          mistakeIndexes: mistakeIndexes,
+          errorIndexes: errorIndexes,
         });
 
         const updateNoteBoard = [...get().notesBoard];
         updateNoteBoard[index].clear();
         const updatedPlayerBoard = [...get().playerBoard];
         updatedPlayerBoard[index] = 0;
+        const updatedMistakeIndexes = new Set(mistakeIndexes);
+        updatedMistakeIndexes.delete(index);
+
+        const updatedErrorIndexes = findErrorIndexes(
+          puzzleBoard,
+          updatedPlayerBoard,
+          hintBoard,
+          updatedMistakeIndexes,
+        );
 
         set((state) => ({
           playerBoard: updatedPlayerBoard,
           notesBoard: updateNoteBoard,
           history: updatedHistory,
+          mistakeIndexes: updatedMistakeIndexes,
+          errorIndexes: updatedErrorIndexes,
         }));
       },
     },
