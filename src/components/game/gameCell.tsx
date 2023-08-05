@@ -51,7 +51,7 @@ interface IHintCellProps {
 
 function HintCell({ cellData }: IHintCellProps) {
   return (
-    <div className="flex aspect-square w-full items-center justify-center border text-lg font-semibold text-slate-900">
+    <div className="flex aspect-square w-full items-center justify-center border bg-emerald-100 text-lg font-semibold text-emerald-700">
       <p>{cellData.value}</p>
     </div>
   );
