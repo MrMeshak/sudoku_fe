@@ -1,7 +1,9 @@
 export interface IBoardHistory {
   playerBoard: number[];
   hintBoard: number[];
-  noteBoard: Set<number>[];
+  notesBoard: Set<number>[];
+  mistakeIndexes: Set<number>;
+  errorIndexes: Set<number>;
 }
 
 export interface IBaseCell {

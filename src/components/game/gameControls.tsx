@@ -13,7 +13,7 @@ export interface IGameControllsProps {}
 export default function GameControlls(props: IGameControllsProps) {
   const buttonNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
   const [controlMode, setControlMode] = useState<'normal' | 'notes'>('normal');
-  const { makeMove, undo, erase, makeNote } = useGameActions();
+  const { makeMove, undo, erase, makeNote, makeHint } = useGameActions();
 
   const handleNumberButton = (value: number) => {
     if (controlMode === 'normal') {
@@ -33,6 +33,10 @@ export default function GameControlls(props: IGameControllsProps) {
     } else {
       setControlMode('normal');
     }
+  };
+
+  const handleHintButton = () => {
+    makeHint();
   };
 
   return (
@@ -60,7 +64,10 @@ export default function GameControlls(props: IGameControllsProps) {
         >
           <NoteIcon className="h-6 w-6" />
         </button>
-        <button className="flex items-center justify-center rounded-lg border-2 border-slate-200 p-4 text-slate-500 hover:border-slate-300">
+        <button
+          onClick={handleHintButton}
+          className="flex items-center justify-center rounded-lg border-2 border-slate-200 p-4 text-slate-500 hover:border-slate-300"
+        >
           <LightBulbIcon />
         </button>
       </div>
