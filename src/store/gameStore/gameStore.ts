@@ -96,7 +96,7 @@ const useGameStore = create<IGameState>((set, get) => {
 
       makeMove: (value: number) => {
         const index = get().index;
-        if (!index) {
+        if (index === undefined) {
           return;
         }
         const {
@@ -143,7 +143,7 @@ const useGameStore = create<IGameState>((set, get) => {
 
       makeNote: (value: number) => {
         const index = get().index;
-        if (!index) {
+        if (index === undefined) {
           return;
         }
 
