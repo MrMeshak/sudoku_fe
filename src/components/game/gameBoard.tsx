@@ -7,7 +7,7 @@ export interface IGameBoardProps {
 
 export default function GameBoard({ boxBoardCells }: IGameBoardProps) {
   return (
-    <div className="grid aspect-square auto-cols-min grid-cols-3 border-2 border-slate-900">
+    <div className="grid aspect-square w-full auto-cols-min grid-cols-3 border-2 border-slate-900">
       <div className="grid aspect-square grid-cols-3 border-2 border-slate-900">
         {boxBoardCells[0].map((cell) => {
           return <GameCell cellData={cell} key={`cell_${cell.index}`} />;

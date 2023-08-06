@@ -8,8 +8,12 @@ export default function SolverPage(props: ISolverPageProps) {
   return (
     <div>
       <SolverHeader />
-      <SolverForm />
-      <SolverSolution />
+      <div className="flex justify-center">
+        <div className=" w-full md:max-w-2xl">
+          <SolverForm />
+          <SolverSolution />
+        </div>
+      </div>
     </div>
   );
 }

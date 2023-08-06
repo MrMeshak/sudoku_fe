@@ -10,9 +10,14 @@ export default function GamePage(props: IGamePageProps) {
   return (
     <div>
       <GameHeader />
-      <GameSettings />
-      <GameGame />
-      <GameControlls />
+
+      <div className="flex justify-center">
+        <div className="mx-8 w-full md:max-w-2xl">
+          <GameSettings />
+          <GameGame />
+          <GameControlls />
+        </div>
+      </div>
     </div>
   );
 }

@@ -21,7 +21,7 @@ export default function GameSettings(props: IGameSettingsProps) {
   };
 
   return (
-    <div className="mx-8 my-4">
+    <div className="my-4">
       <Select options={difficultyOptions} onChange={handleSelect} />
     </div>
   );
