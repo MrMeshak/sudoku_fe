@@ -40,8 +40,8 @@ export default function GameControlls(props: IGameControllsProps) {
   };
 
   return (
-    <div className="m-8">
-      <div className="mb-4 grid grid-cols-4 grid-rows-1 gap-2">
+    <div className="my-4 md:max-w-2xl">
+      <div className="mb-4 grid w-full grid-cols-4 grid-rows-1 gap-2">
         <button
           onClick={() => undo()}
           className="flex items-center justify-center rounded-lg border-2 border-slate-200 p-4 text-slate-500 hover:border-slate-300"

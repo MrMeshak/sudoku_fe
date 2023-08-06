@@ -6,6 +6,7 @@ import {
 } from '@/store/gameStore/gameStore';
 import GameBoard from './gameBoard';
 import { generateFusedGameBoardBoxCells } from '@/store/gameStore/helper/generateFusedGameBoardBoxCells';
+import GameControlls from './gameControls';
 
 export interface IGameGameProps {}
 
@@ -18,7 +19,7 @@ export default function GameGame(props: IGameGameProps) {
   }, []);
 
   return (
-    <div className="mx-8">
+    <div>
       <GameBoard boxBoardCells={boxBoardCells} />
     </div>
   );
