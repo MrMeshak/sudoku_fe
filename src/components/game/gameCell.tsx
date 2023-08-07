@@ -39,7 +39,7 @@ interface IPuzzleCellProps {
 
 function PuzzleCell({ cellData }: IPuzzleCellProps) {
   return (
-    <div className=" flex aspect-square w-full items-center justify-center border font-semibold text-slate-900 md:text-xl">
+    <div className=" flex aspect-square w-full items-center justify-center border font-semibold text-slate-900 sm:text-xl md:text-2xl">
       <p className="">{cellData.value}</p>
     </div>
   );
@@ -51,7 +51,7 @@ interface IHintCellProps {
 
 function HintCell({ cellData }: IHintCellProps) {
   return (
-    <div className="text-emerald-700md:text-xl flex aspect-square w-full items-center justify-center border bg-emerald-50 text-lg font-semibold md:text-xl">
+    <div className="text-emerald-700md:text-xl flex aspect-square w-full items-center justify-center border bg-emerald-50 text-lg font-semibold sm:text-xl md:text-2xl">
       <p>{cellData.value}</p>
     </div>
   );
@@ -73,7 +73,7 @@ function PlayerCell({ cellData }: IPlayerCellProps) {
     return (
       <div
         onClick={handleClick}
-        className={`flex aspect-square w-full flex-wrap items-center justify-center border text-lg font-semibold text-rose-700 md:text-xl 
+        className={`flex aspect-square w-full flex-wrap items-center justify-center border text-lg font-semibold text-rose-700 sm:text-xl  md:text-2xl 
       ${index === cellData.index ? 'bg-rose-200' : 'bg-rose-100'} `}
       >
         <p>{cellData.value}</p>
@@ -84,7 +84,7 @@ function PlayerCell({ cellData }: IPlayerCellProps) {
   return (
     <div
       onClick={handleClick}
-      className={`flex aspect-square w-full flex-wrap items-center justify-center border text-lg font-semibold text-sky-700 md:text-xl
+      className={`flex aspect-square w-full flex-wrap items-center justify-center border text-lg font-semibold text-sky-700 sm:text-xl md:text-2xl
       ${index === cellData.index ? 'bg-slate-100' : 'bg-white'} `}
     >
       <p>{cellData.value}</p>
@@ -137,7 +137,7 @@ function EmptyCell({ cellData }: IEmptyCellProps) {
   return (
     <div
       onClick={handleClick}
-      className={`flex aspect-square w-full items-center justify-center border text-lg font-semibold text-slate-900 md:text-xl ${
+      className={`flex aspect-square w-full items-center justify-center border text-lg font-semibold text-slate-900 sm:text-xl md:text-2xl ${
         index === cellData.index ? 'bg-slate-100' : 'bg-white'
       }`}
     >
