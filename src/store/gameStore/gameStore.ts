@@ -81,7 +81,10 @@ const useGameStore = create<IGameState>((set, get) => {
         set((state) => ({
           status: { status: 'success', message: generateSudokuResult.message },
           puzzleBoard: generateSudokuResult.board,
+          playerBoard: Array(81).fill(0),
+          hintBoard: Array(81).fill(0),
           solutionBoard: generateSudokuResult.solution,
+          notesBoard: generateIntialNotesBoard(),
         }));
         return;
       },
