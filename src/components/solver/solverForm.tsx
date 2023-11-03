@@ -72,7 +72,8 @@ export default function SolverForm(props: ISolverFormProps) {
             readonly={formStatus === 'display' ? true : false}
           />{' '}
           <p className="text-sm text-slate-300">
-            (Enter sudoku board with '.' representing empty cells, eg 5.95.3.6.)
+            (Enter sudoku board with &apos;.&apos; representing empty cells, eg
+            5.95.3.6.)
           </p>
         </div>
         {formStatus === 'input' ? (
