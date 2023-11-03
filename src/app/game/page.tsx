@@ -1,5 +1,5 @@
 import GameBoard from '@/components/game/gameBoard';
-import GameControlls from '@/components/game/gameControls';
+import GameControls from '@/components/game/gameControls';
 import GameGame from '@/components/game/gameGame';
 import GameHeader from '@/components/game/gameHeader';
 import GameSettings from '@/components/game/gameSettings';
@@ -15,7 +15,7 @@ export default function GamePage(props: IGamePageProps) {
         <div className="mx-8 w-full md:max-w-2xl">
           <GameSettings />
           <GameGame />
-          <GameControlls />
+          <GameControls />
         </div>
       </div>
     </div>

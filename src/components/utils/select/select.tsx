@@ -16,7 +16,7 @@ export default function Select({ options, onChange }: ISelectProps) {
       <select
         name="select"
         onChange={onChange}
-        className="pfont-semibold border-slate-3200 rounded-md border-2 bg-white py-2 pl-2 pr-4 text-slate-300"
+        className="pfont-semibold border-slate-3200 appearance-none rounded-md border-2 bg-white py-2 pl-2 pr-8 text-slate-300"
       >
         {options.map((option) => (
           <option value={option.value} key={option.label}>

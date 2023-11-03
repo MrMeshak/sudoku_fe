@@ -8,9 +8,9 @@ import {
 } from '../utils/icons/iconly';
 import { useGameActions } from '@/store/gameStore/gameStore';
 
-export interface IGameControllsProps {}
+export interface IGameControlsProps {}
 
-export default function GameControlls(props: IGameControllsProps) {
+export default function GameControls(props: IGameControlsProps) {
   const buttonNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
   const [controlMode, setControlMode] = useState<'normal' | 'notes'>('normal');
   const { makeMove, undo, erase, makeNote, makeHint } = useGameActions();

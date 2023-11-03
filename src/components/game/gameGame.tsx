@@ -19,7 +19,7 @@ export default function GameGame(props: IGameGameProps) {
   }, []);
 
   return (
-    <div>
+    <div className="grid">
       <GameBoard boxBoardCells={boxBoardCells} />
     </div>
   );
