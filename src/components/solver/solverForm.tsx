@@ -54,7 +54,10 @@ export default function SolverForm(props: ISolverFormProps) {
   return (
     <>
       <form onSubmit={formik.handleSubmit} className="m-8">
-        <label htmlFor="sudokuStr">Sudoku Board</label>
+        <div></div>
+
+        <label htmlFor="sudokuStr">Sudoku Board </label>
+
         <div className="mb-2">
           <TextField
             onChange={formik.handleChange}
@@ -67,7 +70,10 @@ export default function SolverForm(props: ISolverFormProps) {
             touched={formik.touched.sudokuBoardStr}
             maxLength={81}
             readonly={formStatus === 'display' ? true : false}
-          />
+          />{' '}
+          <p className="text-sm text-slate-300">
+            (Enter sudoku board with '.' representing empty cells, eg 5.95.3.6.)
+          </p>
         </div>
         {formStatus === 'input' ? (
           <button

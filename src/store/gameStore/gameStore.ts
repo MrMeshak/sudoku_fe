@@ -2,7 +2,7 @@ import { generateSudoku } from '@/sudoku/sudokuLogic/generateSudoku';
 import { create } from 'zustand';
 import { IBoardHistory } from './helper/game.model';
 import { generateFusedGameBoardBoxCells } from './helper/generateFusedGameBoardBoxCells';
-import { generateIntialNotesBoard } from './helper/generateIntialNotesBoard';
+import { generateInitialNotesBoard } from './helper/generateIntialNotesBoard';
 import { findErrorIndexes } from './helper/findErrorIndexes';
 import { findEmptyIndexes } from './helper/findEmptyIndexes';
 
@@ -60,7 +60,7 @@ const useGameStore = create<IGameState>((set, get) => {
     hintBoard: Array(81).fill(0),
     solutionBoard: Array(81).fill(0),
 
-    notesBoard: generateIntialNotesBoard(),
+    notesBoard: generateInitialNotesBoard(),
 
     mistakeIndexes: new Set<number>(),
     errorIndexes: new Set<number>(),
@@ -84,7 +84,10 @@ const useGameStore = create<IGameState>((set, get) => {
           playerBoard: Array(81).fill(0),
           hintBoard: Array(81).fill(0),
           solutionBoard: generateSudokuResult.solution,
-          notesBoard: generateIntialNotesBoard(),
+          notesBoard: generateInitialNotesBoard(),
+          mistakeIndexes: new Set<number>(),
+          errorIndexes: new Set<number>(),
+          history: [],
         }));
         return;
       },

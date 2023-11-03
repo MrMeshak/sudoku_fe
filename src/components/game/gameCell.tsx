@@ -107,7 +107,7 @@ function NoteCell({ cellData }: INoteCellProps) {
   return (
     <div
       onClick={handleClick}
-      className={`flex flex-wrap items-start overflow-hidden border p-0.5 text-center text-xs text-amber-600 ${
+      className={` :text-sm flex flex-wrap items-start overflow-hidden border p-0.5 text-center text-sm text-amber-600 md:text-lg ${
         index === cellData.index ? 'bg-slate-100' : 'bg-white'
       }`}
     >
