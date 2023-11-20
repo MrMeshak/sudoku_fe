@@ -45,7 +45,6 @@ Sudoku is a website to play and solve sudoku puzzles. The inspiration for this p
 
 * **Backtracking Algorithm**: Through this project I learned how a backtracking algorithm works and implemented my own backtracking algorithm. Some of the challenging aspects included ensuring that there was only a single unique solution for a generated board.
 
-* 
 ## Technologies
 * NextJS
 * TailwindCSS
