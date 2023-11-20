@@ -1,34 +1,58 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+# Sudoku
+Sudoku is a website to play and solve sudoku puzzles. The inspiration for this project came from my wife who loves solving sudoku puzzles. I decided to challenge myself to see if I could solve a sudoku puzzle using my programming skills and hopefully impress her :)
 
-First, run the development server:
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+## Demo & Snippets
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+[https://sudoku-fe.vercel.app/game](https://sudoku-fe.vercel.app/game)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+**Sudoku - New Game**
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+![Sudoku_player](https://github.com/MrMeshak/sudoku_fe/assets/94204153/a180dc91-bf79-4855-80be-5a018c248d5f)
 
-## Learn More
+**Sudoku - Gameplay (Hints, Notes, Mistakes)**
 
-To learn more about Next.js, take a look at the following resources:
+![Sudoku_gameplay](https://github.com/MrMeshak/sudoku_fe/assets/94204153/4397416b-93a3-48d6-8f8a-5723691de0a4)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+**Sudoku Solver - User Input Board**
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+![Sudoku_solver_input](https://github.com/MrMeshak/sudoku_fe/assets/94204153/4118f85e-7753-4e86-a3b3-ade9adfc9f63)
 
-## Deploy on Vercel
+**Sudoku Solver - Solved Board**
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+![Sudoku_solver_solution](https://github.com/MrMeshak/sudoku_fe/assets/94204153/7f97c8ab-e002-414b-91d2-aaecb6476033)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+## Features
+*Sudoku Player*
+* **Board Generation** - Generates a valid sudoku puzzle and supports 5 difficulty level. The puzzle is generated using a backtracking algorithm with extention to ensure that there is only a single unique solution.
+
+* **Mistake Detection** - Detects any conflicting numbers and highlights them in red.
+
+* **Hints** - Using the hint button that will randomly place a correct number into the board and highlight it in green.
+
+* **Notes** - Supports notes in each cell
+
+* **Undo** - Supports full game history with unlimited undos.
+
+* **Erase** - Erase a previously placed number
+
+*Sudoku Solver*
+* **Input Feedback**: live input feedback as players enter the board to be solved
+
+## Learnings
+
+* **Backtracking Algorithm**: Through this project I learned how a backtracking algorithm works and implemented my own backtracking algorithm. Some of the challenging aspects included ensuring that there was only a single unique solution for a generated board.
+
+* 
+## Technologies
+* NextJS
+* TailwindCSS
+* Zustand
+* Jest
+
+
+
+
+
